@@ -6,15 +6,16 @@ import { useImmer } from "use-immer";
 const Quiz = () => {
   const [questionNo, setQuestionNo] = useState(1);
   const [answer, setAnswer] = useImmer([]);
-  const handleAnswer = (id, event) => {
-    const question = answer.find((a) => a.id === id);
+const handleAnswer = (id, event) => {
+  setAnswer((draft) => {
+    const question = draft.find((a) => a.id === id);
     if (question) {
       question.value = event.target.value;
     } else {
-      setAnswer([...answer, { id: id, value: event.target.value }]);
+      draft.push({ id: id, value: event.target.value });
     }
-  };
-  console.log(answer);
+  });
+};
   const handleNextBtn = () => {
     setQuestionNo((prev) => prev + 1);
   };
@@ -36,7 +37,7 @@ const Quiz = () => {
                 <div key={index}>
                   <input
                     type="radio"
-                    checked={answer.find(correct => correct.value === a)}
+                    checked={answer.find((ans) => ans.id === q.id)?.value === a}
                     id={a}
                     value={a}
                     name="question"
