@@ -48,24 +48,32 @@ const Quiz = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-violet-600">
+    <div className="h-screen w-screen bg-violet-600 flex justify-center items-center flex-col">
       {showResult ? (
         <>
-          <div>{correctAnswers}</div>
-          <button onClick={startOverQuiz}>شروع دوباره</button>
+          <div className="bg-green-600 p-5 rounded-lg my-2 font-bold text-white">{` ${correctAnswers} سوالو درست زدی مشتی ایولا`}</div>
+          <button
+            onClick={startOverQuiz}
+            className="bg-red-500 p-2 rounded-lg text-white font-bold text-lg cursor-pointer hover:bg-red-600 hover:scale-110 duration-200"
+          >
+            شروع دوباره
+          </button>
         </>
       ) : (
         <>
           {quiz.questions
             .filter((q) => q.id === questionNo)
             .map((q) => (
-              <div key={q.id}>
+              <div
+                key={q.id}
+                className="bg-violet-400 text-violet-950 w-[20rem] h-60 p-4 shadow-2xl rounded-2xl"
+              >
                 {/* question */}
-                <div>{`${q.id}. ${q.question}`}</div>
+                <div className="text-center font-bold text-lg">{`${q.id}. ${q.question}`}</div>
                 {/* answers */}
                 <div>
                   {q.answers.map((a, index) => (
-                    <div key={index}>
+                    <div key={index} className="flex gap-1 py-1">
                       <input
                         type="radio"
                         checked={
@@ -75,22 +83,34 @@ const Quiz = () => {
                         value={a}
                         name="question"
                         onChange={(e) => handleAnswer(q.id, e)}
+                        className="accent-violet-950"
                       />
-                      <label htmlFor={a}>{a}</label>
+                      <label htmlFor={a} className="text-lg">
+                        {a}
+                      </label>
                     </div>
                   ))}
                 </div>
               </div>
             ))}
-          <div>
-            <button onClick={handlePreviousBtn} disabled={questionNo === 1}>
+          <div className="flex gap-2 my-2">
+            <button
+              onClick={handlePreviousBtn}
+              className="bg-violet-500 p-2 rounded-lg text-white font-bold text-lg cursor-pointer hover:bg-gray-700 hover:scale-110 duration-200"
+              disabled={questionNo === 1}
+            >
               قبل
             </button>
-            <button onClick={handleNextBtn} disabled={questionNo === 5}>
+            <button
+              onClick={handleNextBtn}
+              className="bg-violet-500 p-2 rounded-lg text-white font-bold text-lg cursor-pointer hover:bg-gray-700 hover:scale-110 duration-200"
+              disabled={questionNo === 5}
+            >
               بعد
             </button>
             {answer.length === 5 && (
               <button
+                className="bg-green-500 p-2 rounded-lg text-white font-bold text-lg cursor-pointer hover:bg-green-600 hover:scale-110 duration-200"
                 onClick={() => {
                   setShowResult(true);
                 }}
