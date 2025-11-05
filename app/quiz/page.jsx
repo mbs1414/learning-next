@@ -13,8 +13,17 @@ const Quiz = () => {
       const question = draft.find((a) => a.id === id);
       if (question) {
         question.value = event.target.value;
+        question.isThatCorrect =
+          question.value ===
+          quiz.questions.find((a) => a.id === id).correctAnswer;
       } else {
-        draft.push({ id: id, value: event.target.value });
+        draft.push({
+          id: id,
+          value: event.target.value,
+          isThatCorrect:
+            event.target.value ===
+            quiz.questions.find((a) => a.id === id).correctAnswer,
+        });
       }
     });
   };
@@ -32,12 +41,14 @@ const Quiz = () => {
     setShowResult(false);
   };
   useEffect(() => {
-    const result = answer.map(
-      (a, index) => a.value === quiz.questions[index].correctAnswer
-    );
-    setCorrectAnswers(result.reduce((sum, val) => sum + (val ? 1 : 0), 0));
-    console.log(result);
-  }, [answer]);
+    console.log(answer);
+    
+    // const result = answer.map(
+    //   (a, index) => a.value === quiz.questions[index].correctAnswer
+    // );
+    // setCorrectAnswers(result.reduce((sum, val) => sum + (val ? 1 : 0), 0));
+    // console.log(result);
+  },);
 
   return (
     <div className="h-screen w-screen bg-violet-600">
