@@ -25,6 +25,11 @@ const Quiz = () => {
             quiz.questions.find((a) => a.id === id).correctAnswer,
         });
       }
+      const correctCount = draft.reduce(
+        (sum, q) => sum + (q.isThatCorrect ? 1 : 0),
+        0
+      );
+      setCorrectAnswers(correctCount);
     });
   };
   const handleNextBtn = () => {
@@ -35,20 +40,12 @@ const Quiz = () => {
   };
   const startOverQuiz = () => {
     setQuestionNo(1);
+    setCorrectAnswers(0);
     setAnswer((draft) => {
       draft.length = 0;
     });
     setShowResult(false);
   };
-  useEffect(() => {
-    console.log(answer);
-    
-    // const result = answer.map(
-    //   (a, index) => a.value === quiz.questions[index].correctAnswer
-    // );
-    // setCorrectAnswers(result.reduce((sum, val) => sum + (val ? 1 : 0), 0));
-    // console.log(result);
-  },);
 
   return (
     <div className="h-screen w-screen bg-violet-600">
