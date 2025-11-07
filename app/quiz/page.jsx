@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { quiz } from "../data";
 import { useImmer } from "use-immer";
+import loading from "../loading";
 
 const Quiz = () => {
   const [questionNo, setQuestionNo] = useState(1);
@@ -33,10 +34,14 @@ const Quiz = () => {
     });
   };
   const handleNextBtn = () => {
-    setQuestionNo((prev) => prev + 1);
+    setTimeout(() => {
+      setQuestionNo((prev) => prev + 1);
+    }, 2000);
   };
   const handlePreviousBtn = () => {
-    setQuestionNo((prev) => prev - 1);
+    setTimeout(() => {
+      setQuestionNo((prev) => prev - 1);
+    }, 2000);
   };
   const startOverQuiz = () => {
     setQuestionNo(1);
@@ -60,7 +65,7 @@ const Quiz = () => {
           </button>
         </>
       ) : (
-        <>
+        <Suspense fallback={<loading />}>
           {quiz.questions
             .filter((q) => q.id === questionNo)
             .map((q) => (
@@ -119,7 +124,7 @@ const Quiz = () => {
               </button>
             )}
           </div>
-        </>
+        </Suspense>
       )}
     </div>
   );
