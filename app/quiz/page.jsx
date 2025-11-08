@@ -1,8 +1,7 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 import { quiz } from "../data";
 import { useImmer } from "use-immer";
-import loading from "../loading";
 
 const Quiz = () => {
   const [questionNo, setQuestionNo] = useState(1);
@@ -65,7 +64,7 @@ const Quiz = () => {
           </button>
         </>
       ) : (
-        <Suspense fallback={<loading />}>
+        <>
           {quiz.questions
             .filter((q) => q.id === questionNo)
             .map((q) => (
@@ -124,7 +123,7 @@ const Quiz = () => {
               </button>
             )}
           </div>
-        </Suspense>
+        </>
       )}
     </div>
   );
